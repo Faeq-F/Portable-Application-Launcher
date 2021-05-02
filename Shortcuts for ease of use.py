@@ -1,5 +1,7 @@
+#used modules
 import os, pickle, time, win32com.client
 import sys
+
 #allows working path to be scanned
 from os import listdir
 
@@ -7,6 +9,17 @@ from os import listdir
 directory = os.getcwd()
 #redirects to directory with portable apps
 directory = directory[:-8]
+
+
+
+#removes already existing shortcuts
+shortcutDirectory = directory[:-33]+'\\Computer-Resources\\Shortcuts to apps\\'
+for i in os.walk(shortcutDirectory):
+    path = str(i[0])
+    for j in i[2]:
+        print('\n\n\n', j)
+        filePath = str(path+j)
+        os.remove(filePath)
 
 
 def update():
@@ -49,17 +62,17 @@ def update():
         pickle.dump(executables, fp)
 
 update()
-
+#dumps the list of executables into a txt file
 with open(directory+"Launcher//executableList.txt", 'rb') as fp:
     executables = pickle.load(fp)
 
 paths=[]
-
+# reorganises data to be easily used by following code
 for i in executables:
     j = i[1]
     text = j[3:]
     paths.append(text)
-
+#creates shortcuts for all apps in the shortcuts directory
 for i in paths:
     appposition = i
     drive = str(os.getcwd())
@@ -68,7 +81,7 @@ for i in paths:
     ogappposition = appposition
     appposition = '\"' + appposition + '\"'
     print(appposition)
-    location = "E:\\Computer-Resources\\Shortcuts to apps\\"
+    location = directory[:-33]+"\\Computer-Resources\\Shortcuts to apps\\"
     splitstring = appposition.split('\\')
     name = splitstring[4]
     name = name[:-5]
@@ -76,7 +89,7 @@ for i in paths:
     nameAndExtension = name+'.lnk'
 
     path = os.path.join(location, nameAndExtension)
-    
+
     target = appposition
     icon = ogappposition+',0'
 
@@ -85,4 +98,3 @@ for i in paths:
     shortcut.Targetpath = target
     shortcut.IconLocation = icon
     shortcut.save()
-
