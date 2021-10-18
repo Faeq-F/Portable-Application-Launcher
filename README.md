@@ -3,6 +3,10 @@ A launcher for portable apps on your usb drive or computer
 
 This launcher is a way of running your portable apps easily, without the need for shortcuts or looking through multiple folders or directories for the executable files.
 
+### Todo:
+ - Allow portable apps to be placed in different directories
+ - Allow for UI customisation
+
 ## Requirements:
  - A computer running Windows 7 or higher
  - A folder hierarchy where the Launcher file is at the root of it and portable apps are at "\Computer-Resources\PortableApps\"
